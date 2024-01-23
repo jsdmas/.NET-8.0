@@ -75,6 +75,36 @@ dotnet watch 명령은 앱을 빌드 및 시작한 다음 코드를 변경할 �
 렌더링 모드는 구성 요소가 호스팅되는 모델, 렌더링되는 위치 및 상호 작용 여부를 결정합니다.  
 [https://learn.microsoft.com/ko-kr/aspnet/core/blazor/components/render-modes?view=aspnetcore-8.0](https://learn.microsoft.com/ko-kr/aspnet/core/blazor/components/render-modes?view=aspnetcore-8.0)
 
+## 구성 요소 수정
+
+구성 요소 매개 변수는 특성 또는 자식 콘텐츠를 사용하여 지정되며, 이를 통해 하위 구성 요소에 대한 속성을 설정할 수 있습니다.  
+Counter 구성 요소에 매개 변수를 정의하여 버튼을 클릭할 때마다 증가하는 양을 지정합니다.
+
+- [Parameter] 특성을 사용하여 IncrementAmount에 대한 공개 속성을 추가합니다.
+- currentCount 값을 증가시킬 때 IncrementAmount를 사용하도록 IncrementCount 메서드를 변경합니다.
+
+```C#
+@* Counter.razor *@
+
+@code {
+    private int currentCount = 0;
+
+    // 파라미터 추가
+    [Parameter]
+    public int IncrementAmount{get;set;} = 1;
+
+    private void IncrementCount()
+    {
+        currentCount+= IncrementAmount;
+    }
+}
+```
+
+```C#
+@* Home.razor *@
+<Counter IncrementAmount="10" />
+```
+
 # Reference
 
 [https://dotnet.microsoft.com/ko-kr/learn/aspnet/blazor-tutorial/intro](https://dotnet.microsoft.com/ko-kr/learn/aspnet/blazor-tutorial/intro)
