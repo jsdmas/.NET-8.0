@@ -1,0 +1,32 @@
+@page "/todo"
+@rendermode InteractiveServer
+
+<h3>Todo (@todos.Count(todo => !todo.IsDone))</h3>
+<ul>
+  @foreach(var todo in todos){
+    <li>
+      <input type="checkbox" @bind='todo.IsDone'/>
+      <input @bind='todo.Title'/>
+    </li>
+  }
+</ul>
+<input placeholder="writing..." @bind='newTodo'/>
+<button @onclick='AddTodo'>Add todo</button>
+@code {
+  private List<TodoItem> todos = new();
+  private string? newTodo;
+
+  @* 
+    AddTodo
+    이 메서드는 먼저 newTodo 변수의 값이 공백이 아닌지 여부를 확인합니다. 
+    string.IsNullOrWhiteSpace() 메서드는 문자열이 공백이거나 null이면 true를 반환합니다.
+    변수의 값이 공백이 아니면 todos 배열에 TodoItem 객체를 추가합니다. TodoItem 객체는 Title 속성을 사용하여 추가할 작업의 제목을 지정합니다.
+    마지막으로 newTodo 변수의 값을 공백 문자열로 설정합니다. 이렇게 하면 사용자는 추가할 작업을 입력할 수 있도록 메서드를 다시 호출할 수 있습니다.
+   *@
+  private void AddTodo(){
+    if(!string.IsNullOrWhiteSpace(newTodo)){
+      todos.Add(new TodoItem { Title = newTodo } );
+      newTodo = string.Empty;
+    }
+  }
+}
